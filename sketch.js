@@ -61,7 +61,7 @@ function keyPressed(){
             if(diceno==6 ||diceno==1){
                 players[turn].started=true;
             }
-        }             
+        }
+        turn=(turn+1)%no_of_players;             
     }
-    turn=(turn+1)%no_of_players;
 }
