@@ -1,5 +1,6 @@
 class Player{
     constructor(id,cellno,color){
+        this.started=false;
         this.cellNo=cellno;
         this.id=id;
         this.win=false;

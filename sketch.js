@@ -22,8 +22,10 @@ function draw(){
     board.show();    
     var tempy=22;
     for(var i in players){
-        players[i].update(board.cells);
-        players[i].show();
+        if(players[i].started){    
+            players[i].update(board.cells);
+            players[i].show();
+        }
         players[i].showLegend(tempy);
         tempy+=40;
     }
@@ -37,23 +39,29 @@ function keyPressed(){
     if(keyCode==32){
         var diceno=floor(random(1,7));
         console.log(diceno);
-        if(players[turn].cellNo+diceno<=100){
-            players[turn].cellNo+=diceno;
-        }
-        if(players[turn].cellNo==100){
-            players[turn].win=true;
-        }
-        for(var i in board.ladders){
-            if(board.ladders[i].source==players[turn].cellNo){ 
-                players[turn].cellNo=board.ladders[i].target;
+        if(players[turn].started){
+            if(players[turn].cellNo+diceno<=100){
+                players[turn].cellNo+=diceno;
+            }
+            if(players[turn].cellNo==100){
+                players[turn].win=true;
+            }
+            for(var i in board.ladders){
+                if(board.ladders[i].source==players[turn].cellNo){ 
+                    players[turn].cellNo=board.ladders[i].target;
+                }
+            }
+            for(var i in board.snakes){
+                if(board.snakes[i].target==players[turn].cellNo){ 
+                    players[turn].cellNo=board.snakes[i].source;
+                }
             }
         }
-        for(var i in board.snakes){
-            if(board.snakes[i].target==players[turn].cellNo){ 
-                players[turn].cellNo=board.snakes[i].source;
+        else{
+            if(diceno==6 ||diceno==1){
+                players[turn].started=true;
             }
-        }
-             
+        }             
     }
     turn=(turn+1)%no_of_players;
 }
