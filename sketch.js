@@ -1,0 +1,59 @@
+var board;
+var players=[];
+var no_of_players=0;
+var colors=[[255,0,0],[0,255,0],[0,0,255],[255,187,0],[0,255,237],[255,255,0],[255,0,255]];
+var turn=0;
+function preload(){
+    no_of_players=parseInt(prompt("Enter the number of players(1-7)"));
+    while(no_of_players>7){
+        no_of_players=parseInt(prompt("Enter the number of players(1-7)"));
+    }
+}
+function setup(){
+    createCanvas(900,900);
+    background(0);
+    board=new Board(10,10);
+    for(var i=0;i<no_of_players;i++){
+        this.players.push(new Player(i,1,colors[i]));
+    }
+}
+function draw(){
+    background(0);
+    board.show();    
+    var tempy=22;
+    for(var i in players){
+        players[i].update(board.cells);
+        players[i].show();
+        players[i].showLegend(tempy);
+        tempy+=40;
+    }
+    stroke(255);
+    noFill();
+    textSize(15);
+    text("Player "+(turn+1)+" Roll the Die",10,860);
+}
+// click space to throw a dice
+function keyPressed(){
+    if(keyCode==32){
+        var diceno=floor(random(1,7));
+        console.log(diceno);
+        if(players[turn].cellNo+diceno<=100){
+            players[turn].cellNo+=diceno;
+        }
+        if(players[turn].cellNo==100){
+            players[turn].win=true;
+        }
+        for(var i in board.ladders){
+            if(board.ladders[i].source==players[turn].cellNo){ 
+                players[turn].cellNo=board.ladders[i].target;
+            }
+        }
+        for(var i in board.snakes){
+            if(board.snakes[i].target==players[turn].cellNo){ 
+                players[turn].cellNo=board.snakes[i].source;
+            }
+        }
+             
+    }
+    turn=(turn+1)%no_of_players;
+}
