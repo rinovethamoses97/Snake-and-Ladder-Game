@@ -62,6 +62,8 @@ function keyPressed(){
                 players[turn].started=true;
             }
         }
-        turn=(turn+1)%no_of_players;             
+        turn=(turn+1)%no_of_players;
+        while(players[turn].win)
+            turn=(turn+1)%no_of_players;             
     }
 }
