@@ -3,6 +3,7 @@ var players=[];
 var no_of_players=0;
 var colors=[[255,0,0],[0,255,0],[0,0,255],[255,187,0],[0,255,237],[255,255,0],[255,0,255]];
 var turn=0;
+var diceno=null;
 function preload(){
     no_of_players=parseInt(prompt("Enter the number of players(1-7)"));
     while(no_of_players>7){
@@ -33,11 +34,18 @@ function draw(){
     noFill();
     textSize(15);
     text("Player "+(turn+1)+" Roll the Die",10,860);
+    if(diceno!=null){
+        stroke(255);
+        noFill();
+        rect(380,830,40,40);
+        textSize(15);
+        text(diceno,396,855)
+    }
 }
 // click space to throw a dice
 function keyPressed(){
     if(keyCode==32){
-        var diceno=floor(random(1,7));
+        diceno=floor(random(1,7));
         console.log(diceno);
         if(players[turn].started){
             if(players[turn].cellNo+diceno<=100){
@@ -63,7 +71,13 @@ function keyPressed(){
             }
         }
         turn=(turn+1)%no_of_players;
-        while(players[turn].win)
-            turn=(turn+1)%no_of_players;             
+        var count=0;
+        while(players[turn].win && count<players.length){
+            count++;
+            turn=(turn+1)%no_of_players;                
+        }
+        if(count==players.length){
+            alert("All Won!!");
+        }
     }
 }
