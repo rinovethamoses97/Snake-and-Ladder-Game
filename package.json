@@ -1,0 +1,22 @@
+{
+  "name": "snake_and_ladder",
+  "version": "1.0.0",
+  "description": "snake and ladder multiplayer game using p5Js\r ![alt text](https://github.com/rinovethamoses97/Snake-and-Ladder-Game/blob/master/output.png)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rinovethamoses97/Snake-and-Ladder-Game.git"
+  },
+  "author": "rino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rinovethamoses97/Snake-and-Ladder-Game/issues"
+  },
+  "homepage": "https://github.com/rinovethamoses97/Snake-and-Ladder-Game#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
