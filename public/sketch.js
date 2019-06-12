@@ -41,43 +41,57 @@ function draw(){
         textSize(15);
         text(diceno,396,855)
     }
+    stroke(255);
+    noFill();
+    rect(810,830,40,40);
+    textSize(15);
+    text("Roll",817,855)
 }
 // click space to throw a dice
 function keyPressed(){
     if(keyCode==32){
-        diceno=floor(random(1,7));
-        console.log(diceno);
-        if(players[turn].started){
-            if(players[turn].cellNo+diceno<=100){
-                players[turn].cellNo+=diceno;
-            }
-            if(players[turn].cellNo==100){
-                players[turn].win=true;
-            }
-            for(var i in board.ladders){
-                if(board.ladders[i].source==players[turn].cellNo){ 
-                    players[turn].cellNo=board.ladders[i].target;
-                }
-            }
-            for(var i in board.snakes){
-                if(board.snakes[i].target==players[turn].cellNo){ 
-                    players[turn].cellNo=board.snakes[i].source;
-                }
+        roll();
+    }
+}
+function roll(){
+    diceno=floor(random(1,7));
+    console.log(diceno);
+    if(players[turn].started){
+        if(players[turn].cellNo+diceno<=100){
+            players[turn].cellNo+=diceno;
+        }
+        if(players[turn].cellNo==100){
+            players[turn].win=true;
+        }
+        for(var i in board.ladders){
+            if(board.ladders[i].source==players[turn].cellNo){ 
+                players[turn].cellNo=board.ladders[i].target;
             }
         }
-        else{
-            if(diceno==6 ||diceno==1){
-                players[turn].started=true;
+        for(var i in board.snakes){
+            if(board.snakes[i].target==players[turn].cellNo){ 
+                players[turn].cellNo=board.snakes[i].source;
             }
         }
-        turn=(turn+1)%no_of_players;
-        var count=0;
-        while(players[turn].win && count<players.length){
-            count++;
-            turn=(turn+1)%no_of_players;                
+    }
+    else{
+        if(diceno==6 ||diceno==1){
+            players[turn].started=true;
         }
-        if(count==players.length){
-            alert("All Won!!");
-        }
+    }
+    turn=(turn+1)%no_of_players;
+    var count=0;
+    while(players[turn].win && count<players.length){
+        count++;
+        turn=(turn+1)%no_of_players;                
+    }
+    if(count==players.length){
+        alert("All Won!!");
+    }
+}
+function mousePressed(){
+    if(mouseX>=810 && mouseX<=850 && mouseY>=830 && mouseY<=870){
+        // user clicked the roll button
+        roll();
     }
 }
