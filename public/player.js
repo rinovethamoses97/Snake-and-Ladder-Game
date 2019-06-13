@@ -12,11 +12,14 @@ class Player{
         this.x=board.cells[board.cells.length-1].x+this.x_off;
         this.y=board.cells[board.cells.length-1].y+this.y_off;
         this.target=cellno;
+        this.percentage=0.1;
+        this.plotx=board.cells[board.cells.length-1].x+this.x_off;
+        this.ploty=board.cells[board.cells.length-1].y+this.y_off;
     }
     show(){
         stroke(this.color[0],this.color[1],this.color[2]);
         fill(this.color[0],this.color[1],this.color[2],100); 
-        rect(this.prevx,this.prevy,18,18);    
+        rect(this.plotx,this.ploty,18,18);    
     }
     update(cells){
         // this.prevx=lerp(this.prevx,this.x,0.05);
@@ -34,14 +37,26 @@ class Player{
                 this.y=cells[i].y+this.y_off;
             }
         }
-        if(this.prevx<this.x)
-            this.prevx+=4;
-        if(this.prevx>this.x)
-            this.prevx-=4;
-        if(this.prevy>this.y)
-            this.prevy-=4;
-        if(this.prevy<this.y)
-            this.prevy+=4;
+        // if(this.prevx<this.x)
+        //     this.prevx+=4;
+        // if(this.prevx>this.x)
+        //     this.prevx-=4;
+        // if(this.prevy>this.y)
+        //     this.prevy-=4;m
+        // if(this.prevy<this.y)
+        //     this.prevy+=4;
+        if(this.prevx!=this.x || this.prevy!=this.y){
+            this.plotx=this.prevx+(this.percentage)*(this.x-this.prevx);
+            this.ploty=this.prevy+(this.percentage)*(this.y-this.prevy);
+            this.percentage+=0.015;
+            if(this.percentage>=1){
+                this.percentage=0.1;
+                this.prevx=this.x;
+                this.prevy=this.y;
+                this.plotx=this.plotx+this.x-this.plotx;
+                this.ploty=this.ploty+this.y-this.ploty;
+            }
+        }
     }
     checkLadderandSnake(board){
         if(this.cellNo==this.target && this.prevx==this.x && this.prevy==this.y){
