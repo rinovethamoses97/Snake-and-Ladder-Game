@@ -47,6 +47,16 @@ function draw(){
     rect(810,830,40,40);
     textSize(15);
     text("Roll",817,855)
+    var ct=0;
+    for(var i in players){
+        if(players[i].win && players[i].prevx==players[i].x && players[i].prevy==players[i].y){
+            ct++;
+        }
+    }
+    if(ct==players.length){
+        alert("All Won!!");
+        noLoop();
+    }
 }
 // click space to throw a dice
 function keyPressed(){
@@ -62,9 +72,6 @@ function roll(){
         if(players[turn].cellNo+diceno<=100){
             players[turn].target=players[turn].cellNo+diceno;
         }
-        if(players[turn].cellNo==100){
-            players[turn].win=true;
-        }
     }
     else{
         if(diceno==6 ||diceno==1){
@@ -76,9 +83,6 @@ function roll(){
     while(players[turn].win && count<players.length){
         count++;
         turn=(turn+1)%no_of_players;                
-    }
-    if(count==players.length){
-        alert("All Won!!");
     }
 }
 function mousePressed(){

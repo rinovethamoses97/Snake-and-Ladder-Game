@@ -21,6 +21,19 @@ class Player{
     update(cells){
         // this.prevx=lerp(this.prevx,this.x,0.05);
         // this.prevy=lerp(this.prevy,this.y,0.05);
+        if(this.cellNo!=this.target && this.prevx==this.x && this.prevy==this.y){
+            if(this.cellNo+1<=100){
+                this.cellNo+=1;
+                if(this.cellNo==100)
+                    this.win=true;
+            }
+        }
+        for(var i in cells){
+            if(cells[i].cellNo==this.cellNo){
+                this.x=cells[i].x+this.x_off;
+                this.y=cells[i].y+this.y_off;
+            }
+        }
         if(this.prevx<this.x)
             this.prevx+=4;
         if(this.prevx>this.x)
@@ -29,15 +42,6 @@ class Player{
             this.prevy-=4;
         if(this.prevy<this.y)
             this.prevy+=4;
-        if(this.cellNo!=this.target && this.prevx==this.x && this.prevy==this.y){
-            this.cellNo+=1;
-        }
-        for(var i in cells){
-            if(cells[i].cellNo==this.cellNo){
-                this.x=cells[i].x+this.x_off;
-                this.y=cells[i].y+this.y_off;
-            }
-        }
     }
     checkLadderandSnake(board){
         if(this.cellNo==this.target && this.prevx==this.x && this.prevy==this.y){
